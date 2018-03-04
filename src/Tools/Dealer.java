@@ -15,26 +15,30 @@ public class Dealer extends Hand{
         super.draw(card1);
         super.draw(card2);
         
-        System.out.println("The Dealer has a(n)"+ card1.printCard() +" showing, and a hidden card");
+        aux = card1;
+        
+        System.out.println("The Dealer has a(n) "+ aux.printCard() +" showing, and a hidden card");
         System.out.println("Her total is hidden too");
+        
+        aux = card2;
         
     }
     
     @Override
     public void draw(Card card){
         super.draw(card);
-        System.out.printf("She drew a(n)");
-        card.printCard();
+        aux = card;
+        System.out.println("She drew a(n) " + aux.printCard());
     }
     
     public void printHidden(){
-        System.out.println("Her hidden card was a(n)" + cards.get(1).printCard());
-        System.out.println("Her total was" + sum);
+        System.out.println("Her hidden card was a(n) " + aux.printCard());
+        System.out.println("Her total was " + sum);
     }
     
     @Override
     public void printTotal(){
-        System.out.println("Her total is" + sum);
+        System.out.println("Her total is " + sum);
     }
     
 }

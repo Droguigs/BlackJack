@@ -18,6 +18,8 @@ public class Logic implements Runnable{
     private static Player player;
     private static Dealer dealer;
     private static BufferedReader stdin;
+    private String input;
+    private boolean flag = true;
     
     @Override
     public void run() {
@@ -28,19 +30,31 @@ public class Logic implements Runnable{
         
         System.out.println("Welcome to the Blackjack table!");
         
-        player = new Player(deck.draw(),deck.draw());
+        player = new Player(deck.drawCard(),deck.drawCard());
         player.printTotal();
         
-        dealer = new Dealer(deck.draw(),deck.draw());
+        dealer = new Dealer(deck.drawCard(),deck.drawCard());
+        
+        player.setHit(true);
+        dealer.setHit(true);
         
         while(player.hit){
+            System.out.println();
+            System.out.printf("Would you like to 'hit' or 'stay'? ");
             if(player.sum<21){
                 try {
-                    if(stdin.readLine().equals("stay")){
+                    input = stdin.readLine();
+                    if(input.equals("stay")){
                         player.setHit(false);
-                    }else if(stdin.readLine().equals("hit")){
+                    }else if(input.equals("hit")){
                         player.setHit(true);
-                        player.draw(deck.draw());
+                        player.draw(deck.drawCard());
+                        if(player.sum >21){
+                            System.out.println("You Busted");
+                            printDefeatStatement();
+                            player.setHit(false);
+                            flag = false;
+                        }
                     }
 
                 } catch (IOException ex) {
@@ -49,37 +63,46 @@ public class Logic implements Runnable{
                 }
             }else if(player.sum == 21){
                 System.out.println("You automatically Stay");
-            }else{
-                System.out.println("You Busted");
-                printDefeatStatement();
+                player.setHit(false);
             }
         }
-        System.out.println("Okay, Dealer's turn.");
-        dealer.printHidden();
-        
-        while(dealer.hit){
-            if(dealer.sum < 18){
-                dealer.setHit(true);
-                System.out.println("Dealer chooses to hit");
-                dealer.draw(deck.draw());
-                dealer.printTotal();
-                
-            }else if(dealer.sum <=21){
-                dealer.setHit(false);
-            }else{
-                System.out.println("Dealer busted");
-                printVictoryStatement();
+        if(flag){
+            System.out.println();
+            System.out.println("Okay, Dealer's turn.");
+            dealer.printHidden();
+
+            while(dealer.hit){
+                if(dealer.sum < 18){
+                    dealer.setHit(true);
+                    System.out.println();
+                    System.out.println("Dealer chooses to hit");
+                    dealer.draw(deck.drawCard());
+                    dealer.printTotal();
+                    if(dealer.sum > 21){
+                        System.out.println("Dealer busted");
+                        printVictoryStatement();
+                        dealer.setHit(false);
+                        flag = false;
+                    }
+
+                }else if(dealer.sum <=21){
+                    dealer.setHit(false);
+                }
+
             }
             
+            if(flag){
+                System.out.println();
+                dealer.printTotal();
+                player.printTotal();
+
+                if(dealer.getTotal() >= player.getTotal()){
+                    printDefeatStatement();
+                }else
+                    printVictoryStatement();
+            }
+
         }
-        
-        dealer.printTotal();
-        player.printTotal();
-        
-        if(dealer.getTotal() >= player.getTotal()){
-            printDefeatStatement();
-        }else
-            printVictoryStatement();
         
     }
     

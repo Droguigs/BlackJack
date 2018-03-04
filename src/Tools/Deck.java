@@ -37,7 +37,7 @@ public class Deck {
         Collections.shuffle(deck);
     }
     
-    public Card draw(){
+    public Card drawCard(){
         Card helper;
         if(!deck.isEmpty()){
             helper = deck.get(0);
