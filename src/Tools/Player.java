@@ -21,6 +21,7 @@ public class Player extends Hand{
     @Override
     public void draw(Card card){
         super.draw(card);
+        aux = card;
         System.out.println("You drew a(n) " + aux.printCard());
         
         this.printTotal();
