@@ -9,6 +9,22 @@ package Tools;
  *
  * @author schia
  */
-public class Player {
+public class Player extends Hand{
+    
+    public Player(Card card1, Card card2){
+        super.draw(card1);
+        super.draw(card2);
+        
+        System.out.println("You get a(n)"+ card1.printCard() +"and a(n)" + card2.printCard());    
+    }
+    
+    @Override
+    public void draw(Card card){
+        super.draw(card);
+        System.out.printf("You drew a(n)"+card.printCard());
+        this.printTotal();
+    }
+    
+    
     
 }

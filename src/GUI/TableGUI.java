@@ -9,6 +9,6 @@ package GUI;
  *
  * @author schia
  */
-public class Table {
+public class TableGUI {
     
 }

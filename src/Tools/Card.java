@@ -14,6 +14,7 @@ public class Card {
     private int value;
     private int suit;
     boolean face = false;
+    private String suitC;
     
     public Card(int value, int suit){
         this.value = value;
@@ -21,117 +22,54 @@ public class Card {
         if (value> 10){
             face = true;
         }
+        switch(suit){
+            case 1:
+                suitC = "\u2666";
+            break;
+            
+            case 2:
+                suitC = "\u2663";
+            break;
+            
+            case 3:
+                suitC = "\u2764";
+            break;
+            
+            case 4:
+                suitC = "\u2660";
+            break;
+        }
+        
+        
     }
     
-    public void printCard(){
+    public String printCard(){
         if(!this.checkFace()){
-            switch(this.getCardSuit()){
-                
-                case 1:
-                    System.out.println(this.getCardVallue() +"\u2666");
-                break;
-                    
-                case 2:
-                    System.out.println(this.getCardVallue() +"\u2663");
-                break;
-                    
-                case 3:
-                    System.out.println(this.getCardVallue() +"\u2764");
-                break;
-                    
-                case 4:
-                    System.out.println(this.getCardVallue() +"\u2660");
-                break;
-                    
-            }
+            return this.getCardVallue() + suitC;
         }else{
-            switch(this.getCardSuit()){
-
-                case 1:
-                    switch(this.getCardVallue()){
+            switch(this.getCardVallue()){
                         case 11:
-                            System.out.println("A\u2666");
-                        break;
+                            return "A" + suitC;
                            
                         case 12:
-                            System.out.println("J\u2666");
-                        break;
+                            return "J" + suitC;
                             
                         case 13:
-                            System.out.println("Q\u2666");
-                        break;
+                            return "Q" + suitC;
                             
                         case 14:
-                            System.out.println("K\u2666");
-                        break;
-                    }
-                break;
-
-                case 2:
-                    switch(this.getCardVallue()){
-                        case 11:
-                            System.out.println("A\u2663");
-                        break;
-
-                        case 12:
-                            System.out.println("J\u2663");
-                        break;
-
-                        case 13:
-                            System.out.println("Q\u2663");
-                        break;
-
-                        case 14:
-                            System.out.println("K\u2663");
-                        break;
-                    }
-                break;
-
-                case 3:
-                    switch(this.getCardVallue()){
-                        case 11:
-                            System.out.println("A\u2764");
-                        break;
-                            
-                        case 12:
-                            System.out.println("J\u2764");
-                        break;
-                            
-                        case 13:
-                            System.out.println("Q\u2764");
-                        break;
-                            
-                        case 14:
-                            System.out.println("K\u2764");
-                        break;
-                    }
-                break;
-
-                case 4:
-                    switch(this.getCardVallue()){
-                        case 11:
-                            System.out.println("A\u2660");
-                        break;
-                            
-                        case 12:
-                            System.out.println("J\u2660");
-                        break;
-                            
-                        case 13:
-                            System.out.println("Q\u2660");
-                        break;
-                            
-                        case 14:
-                            System.out.println("K\u2660");
-                        break;
-                    }
-                break;
-            }
+                            return "K" + suitC;
+            }      
         }
+        
+        return "";
     }
     
     public int getCardVallue(){
-        return value;
+        if(value < 11){
+            return value;
+        }else
+            return 10;
     }
     
     public int getCardSuit(){

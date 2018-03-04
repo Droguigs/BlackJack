@@ -11,7 +11,8 @@ import java.util.ArrayList;
  *
  * @author schia
  */
-public class Hand {
+public class Hand {    
+    boolean hit = true;
     int sum;
     ArrayList<Card> cards;
     
@@ -20,7 +21,7 @@ public class Hand {
         sum = 0;
     }
     
-    public void hit(Card card){
+    public void draw(Card card){
         cards.add(card);
     }
     
@@ -28,16 +29,21 @@ public class Hand {
         System.out.println("Your total is" + sum);
     }
     
-    public ArrayList<Card> resetHand(){
-        ArrayList<Card> cards = new ArrayList<Card>();
-        
-        for(Card card: this.cards){
-            cards.add(card);
+    public Card resetHand(){
+        Card card;
+        if(!cards.isEmpty()){
+            card = cards.get(0);
+            return card;
         }
         
-        this.cards.clear();
-        
-        return cards;
+        return null;
     }
     
+    public int getTotal(){
+        return sum;
+    }
+    
+    public void setHit(boolean b){
+        hit = b;
+    }
 }
